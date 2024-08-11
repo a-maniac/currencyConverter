@@ -1,5 +1,6 @@
 package com.example.CurrencyConverter.controllers;
 
+import com.example.CurrencyConverter.entities.CurrencyEntity;
 import com.example.CurrencyConverter.service.impl.CurrencyConverterImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class CurrencyController {
     CurrencyConverterImpl currencyConverter;
 
     @GetMapping(path="/getCurrency")
-    public Double getExchangeRate(@RequestParam String fromCurrency,
-                                  @RequestParam String toCurrency,
-                                  @RequestParam Double units) {
+    public CurrencyEntity getExchangeRate(@RequestParam String fromCurrency,
+                                          @RequestParam String toCurrency,
+                                          @RequestParam Double units) {
 
         return currencyConverter.convertCurrency(fromCurrency,toCurrency,units);
     }

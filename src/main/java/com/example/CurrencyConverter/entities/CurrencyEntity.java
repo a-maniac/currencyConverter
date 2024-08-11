@@ -4,14 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class CurrencyEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
-    public Double exchangeRate;
-    public Double currency;
+    public Double fromCurrencyExchangeRate;
+    public String fromCurrency;
+    public Double toCurrencyExchangeRate;
+    public String toCurrency;
+    public Double calculatedCurrency;
 }

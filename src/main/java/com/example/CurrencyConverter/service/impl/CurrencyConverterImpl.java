@@ -1,5 +1,7 @@
 package com.example.CurrencyConverter.service.impl;
 
+import com.example.CurrencyConverter.entities.CurrencyEntity;
+import com.example.CurrencyConverter.repositories.CurrencyRepository;
 import com.example.CurrencyConverter.service.CurrencyConverter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,12 +20,15 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     Logger log = LoggerFactory.getLogger(CurrencyConverterImpl.class);
 
     private final RestClient restClient;
+    private final CurrencyRepository currencyRepository;
 
     @Override
-    public Double convertCurrency(String fromCurrency, String toCurrency, Double units) {
+    public CurrencyEntity convertCurrency(String fromCurrency, String toCurrency, Double units) {
         log.info("Entering CurrencyConverterImpl.convertCurrency()");
 
-        String fromCurrencyUri="/v1/latest?apikey=fca_live_QXgaZo6KwSL4ymSAXzqt1DBdRZTEOilCGe1HnDuE&currencies=INR";
+        CurrencyEntity currencyEntity= new CurrencyEntity();
+
+        String fromCurrencyUri="/v1/latest?apikey=fca_live_QXgaZo6KwSL4ymSAXzqt1DBdRZTEOilCGe1HnDuE&currencies="+fromCurrency;
         Map<String, Map<String, Double>> fromCurrencyExchangeRate=restClient.get()
                 .uri(fromCurrencyUri)
                 .retrieve()
@@ -43,8 +48,14 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         Double convertedCurrency=units*
                 (innerMapToCurrency.get(toCurrency)/innerMapFromCurrency.get(fromCurrency));
 
+        currencyEntity.setToCurrency(toCurrency);
+        currencyEntity.setFromCurrency(fromCurrency);
+        currencyEntity.setToCurrencyExchangeRate(innerMapToCurrency.get(toCurrency));
+        currencyEntity.setFromCurrencyExchangeRate(innerMapFromCurrency.get(fromCurrency));
+        currencyEntity.setCalculatedCurrency(convertedCurrency);
         log.info("Exiting from CurrencyConverterImpl.convertCurrency()");
-        return convertedCurrency;
+        currencyRepository.save(currencyEntity);
+        return currencyEntity;
 
     }
 }
