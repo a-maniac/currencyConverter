@@ -1,13 +1,14 @@
 package com.example.CurrencyConverter.service.impl;
 
+import com.example.CurrencyConverter.dto.CurrencyDto;
 import com.example.CurrencyConverter.entities.CurrencyEntity;
 import com.example.CurrencyConverter.repositories.CurrencyRepository;
 import com.example.CurrencyConverter.service.CurrencyConverter;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -21,9 +22,10 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
     private final RestClient restClient;
     private final CurrencyRepository currencyRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public CurrencyEntity convertCurrency(String fromCurrency, String toCurrency, Double units) {
+    public CurrencyDto convertCurrency(String fromCurrency, String toCurrency, Double units) {
         log.info("Entering CurrencyConverterImpl.convertCurrency()");
 
         CurrencyEntity currencyEntity= new CurrencyEntity();
@@ -53,9 +55,10 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         currencyEntity.setToCurrencyExchangeRate(innerMapToCurrency.get(toCurrency));
         currencyEntity.setFromCurrencyExchangeRate(innerMapFromCurrency.get(fromCurrency));
         currencyEntity.setCalculatedCurrency(convertedCurrency);
+        currencyEntity.setUnits(units);
         log.info("Exiting from CurrencyConverterImpl.convertCurrency()");
         currencyRepository.save(currencyEntity);
-        return currencyEntity;
+        return modelMapper.map(currencyEntity, CurrencyDto.class);
 
     }
 }

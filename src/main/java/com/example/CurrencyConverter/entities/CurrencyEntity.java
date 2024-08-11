@@ -19,4 +19,5 @@ public class CurrencyEntity {
     public Double toCurrencyExchangeRate;
     public String toCurrency;
     public Double calculatedCurrency;
+    public Double units;
 }

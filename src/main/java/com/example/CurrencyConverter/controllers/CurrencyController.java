@@ -1,5 +1,6 @@
 package com.example.CurrencyConverter.controllers;
 
+import com.example.CurrencyConverter.dto.CurrencyDto;
 import com.example.CurrencyConverter.entities.CurrencyEntity;
 import com.example.CurrencyConverter.service.impl.CurrencyConverterImpl;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,9 @@ public class CurrencyController {
     CurrencyConverterImpl currencyConverter;
 
     @GetMapping(path="/getCurrency")
-    public CurrencyEntity getExchangeRate(@RequestParam String fromCurrency,
-                                          @RequestParam String toCurrency,
-                                          @RequestParam Double units) {
+    public CurrencyDto getExchangeRate(@RequestParam String fromCurrency,
+                                       @RequestParam String toCurrency,
+                                       @RequestParam Double units) {
 
         return currencyConverter.convertCurrency(fromCurrency,toCurrency,units);
     }
