@@ -14,7 +14,7 @@ public class RestClientConfig {
     @Bean
     RestClient getRestClient(){
         return RestClient.builder()
-                .baseUrl("https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_QXgaZo6KwSL4ymSAXzqt1DBdRZTEOilCGe1HnDuE")
+                .baseUrl("https://api.freecurrencyapi.com")
                 .defaultHeader(CONTENT_TYPE,APPLICATION_JSON_VALUE)
                 .build();
     }
