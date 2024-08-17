@@ -1,6 +1,7 @@
 package com.example.CurrencyConverter.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Data
 public class UserEntity implements UserDetails {
 
     @Id
@@ -17,6 +19,12 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+
+    public UserEntity(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
