@@ -20,6 +20,11 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
 
+    public UserEntity() {
+    }
+
+    private String name;
+
     public UserEntity(Long id, String email, String password) {
         this.id = id;
         this.email = email;
