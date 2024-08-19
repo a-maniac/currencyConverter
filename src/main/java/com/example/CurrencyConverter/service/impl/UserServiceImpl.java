@@ -1,6 +1,5 @@
 package com.example.CurrencyConverter.service.impl;
 
-import com.example.CurrencyConverter.dto.LoginDto;
 import com.example.CurrencyConverter.dto.SignUpDto;
 import com.example.CurrencyConverter.dto.UserDto;
 import com.example.CurrencyConverter.entities.UserEntity;
@@ -8,7 +7,6 @@ import com.example.CurrencyConverter.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
