@@ -28,7 +28,16 @@ public class JwtServiceImpl {
                 .claim("email",userEntity.getEmail())
                 .claim("roles", Set.of("ADMIN,USER"))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis()+60*1000))
+                .expiration(new Date(System.currentTimeMillis()+60*1000*10))
+                .signWith(getSecretKey())
+                .compact();
+    }
+
+    public String createRefreshToken(UserEntity userEntity){
+        return Jwts.builder()
+                .subject(userEntity.getId().toString())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis()+ 60L *1000*60*24*30*6))
                 .signWith(getSecretKey())
                 .compact();
     }
